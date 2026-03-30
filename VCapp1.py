@@ -138,7 +138,7 @@ st.markdown("""
 st.markdown("""
 <div class="alphalens-header">
   <div style="display:flex; align-items:center; gap:1rem;">
-    """ + (f'<img src="data:image/png;base64,{LOGO_B64}" style="width:65px;height:65px;object-fit:contain;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(5deg) brightness(0.85);" />' if LOGO_B64 else """<svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    """ + (f'<img src="data:image/png;base64,{LOGO_B64}" style="width:65px;height:65px;object-fit:contain;" />' if LOGO_B64 else """<svg width="60" height="60" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs><clipPath id="cc"><circle cx="100" cy="100" r="78"/></clipPath></defs>
       <circle cx="100" cy="100" r="87" fill="#0a0b0e" stroke="#c9a84c" stroke-width="2.5"/>
       <circle cx="100" cy="100" r="81" fill="#0a0b0e" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
