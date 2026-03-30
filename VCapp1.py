@@ -373,7 +373,7 @@ Include: specific market sizes, named companies with recent rounds/amounts, CAGR
 End with **Investment Verdict** scoring VC fit (1-10) and PE fit (1-10)."""
         with st.spinner("Researching markets…"):
             try:
-                result = stream_claude(prompt, system, use_search=True)
+                result = stream_claude(prompt, system, max_tokens=3000, use_search=True, model="claude-sonnet-4-6")
                 st.session_state["market_result"] = result
                 st.session_state["market_query_done"] = market_query
             except Exception as e:
