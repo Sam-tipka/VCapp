@@ -1005,28 +1005,29 @@ Return a JSON array of up to 10 deals with this structure:
 [{{"company":"...","date":"...","round":"...","amount":"...","valuation":"...","investors":"...","multiple":"EV/Rev or EV/EBITDA if available","summary":"1-2 sentences about the deal and why it's comparable"}}]
 Focus on real, verifiable deals with actual amounts. Include the most relevant comparables."""
 
-        with st.spinner("Scanning deal databases…"):
+       with st.spinner("Scanning deal databases…"):
             try:
                 raw = stream_claude(prompt, system, max_tokens=2000, use_search=True, model="claude-sonnet-4-6")
-    raw = raw.strip()
-    if not raw:
-        st.error("No results returned. Try a more specific company or market name.")
-    else:
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"): raw = raw[4:]
-        start = raw.find("[")
-        end = raw.rfind("]") + 1
-        if start != -1 and end > start:
-            raw = raw[start:end]
-        try:
-            deals = json.loads(raw)
-            st.session_state["comp_deals"] = deals
-            st.session_state["comp_deals_query"] = comp_company
-        except:
-            st.error("Could not parse results. Try again or use a different search term.")
-except Exception as e:
-    st.error(f"Search failed: {e}")
+                raw = raw.strip()
+                if not raw:
+                    st.error("No results returned. Try a more specific search term.")
+                else:
+                    if raw.startswith("```"):
+                        raw = raw.split("```")[1]
+                        if raw.startswith("json"):
+                            raw = raw[4:]
+                    start = raw.find("[")
+                    end = raw.rfind("]") + 1
+                    if start != -1 and end > start:
+                        raw = raw[start:end]
+                    try:
+                        deals = json.loads(raw)
+                        st.session_state["comp_deals"] = deals
+                        st.session_state["comp_deals_query"] = comp_company
+                    except Exception:
+                        st.error("Could not parse results. Try again.")
+            except Exception as e:
+                st.error(f"Search failed: {e}")
 
     if "comp_deals" in st.session_state:
         deals = st.session_state["comp_deals"]
