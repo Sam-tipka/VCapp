@@ -1007,12 +1007,25 @@ Focus on real, verifiable deals with actual amounts. Include the most relevant c
 
         with st.spinner("Scanning deal databases…"):
             try:
-                raw = stream_claude(prompt, system, max_tokens=1500, use_search=True, model="claude-sonnet-4-6")
-                raw = raw.strip()
-                if raw.startswith("```"):
-                    raw = raw.split("```")[1]
-                    if raw.startswith("json"): raw = raw[4:]
-                deals = json.loads(raw)
+                raw = stream_claude(prompt, system, max_tokens=2000, use_search=True, model="claude-sonnet-4-6")
+raw = raw.strip()
+if not raw:
+    st.error("No results returned. Try a more specific company or market name.")
+else:
+    if raw.startswith("```"):
+        raw = raw.split("```")[1]
+        if raw.startswith("json"): raw = raw[4:]
+    # Find JSON array in response
+    start = raw.find("[")
+    end = raw.rfind("]") + 1
+    if start != -1 and end > start:
+        raw = raw[start:end]
+    try:
+        deals = json.loads(raw)
+        st.session_state["comp_deals"] = deals
+        st.session_state["comp_deals_query"] = comp_company
+    except:
+        st.error("Could not parse results. Try again or use a different search term.")
                 st.session_state["comp_deals"] = deals
                 st.session_state["comp_deals_query"] = comp_company
             except Exception as e:
