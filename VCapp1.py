@@ -184,10 +184,10 @@ st.markdown("""
 def get_client():
     return anthropic.Anthropic()
 
-def stream_claude(prompt, system="", max_tokens=4000, use_search=False):
+def stream_claude(prompt, system="", max_tokens=4000, use_search=False, model="claude-opus-4-5"):
     client = get_client()
     kwargs = dict(
-        model="claude-opus-4-5",
+        model=model,
         max_tokens=max_tokens,
         system=system,
         messages=[{"role": "user", "content": prompt}],
