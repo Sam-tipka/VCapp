@@ -1,7 +1,4 @@
-import os
-os.environ["ANTHROPIC_API_KEY"] = "YOUR_API_KEY_HERE"
 
-import streamlit as st
 import anthropic
 import json
 import pandas as pd
@@ -12,6 +9,13 @@ import sqlite3
 import base64
 from datetime import datetime, date
 import io
+import os
+import streamlit as st
+
+try:
+    os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+except:
+    os.environ["ANTHROPIC_API_KEY"] = ""
 
 # ── LOGO HELPER ────────────────────────────────────────────────────────────────
 
